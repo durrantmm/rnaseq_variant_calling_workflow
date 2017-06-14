@@ -21,6 +21,15 @@ if [ $? -ne 0 ]
         exit 1
 fi
 
+wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/test.tar.gz
+tar -zxvf test.tar.gz
+
+if [ $? -ne 0 ]
+    then
+        echo "Could not download the test data"
+        exit 1
+fi
+
 
 
 echo "------------------------------------------------------------------------------------------------------"
