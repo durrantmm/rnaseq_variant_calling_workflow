@@ -100,7 +100,7 @@ rule star_genome:
         sa="{star_genome_dir}/{{genome}}/SA".format(star_genome_dir=STAR_GENOME_DIR)
     shell:
         "mkdir -p {output.dir}; "
-        "star --runThreadN 2 --runMode genomeGenerate --genomeDir {output.dir} "
+        "STAR --runThreadN 2 --runMode genomeGenerate --genomeDir {output.dir} "
         "--genomeFastaFiles {input.refgen} --sjdbGTFfile {input.gencode} --sjdbOverhang 75"
 
 rule star_align:
@@ -115,7 +115,7 @@ rule star_align:
         out_prefix = output.sam.strip('Aligned.out.sam')+'.'
 
         command = "mkdir -p {{output.dir}}; " \
-        "star --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
+        "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
         "--genomeDir {{input.genome_dir}} --readFilesCommand gunzip -c --runThreadN 6 " \
         "--genomeLoad NoSharedMemory --outFilterMultimapNmax 20 --alignSJoverhangMin 8 " \
         "--alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 " \
