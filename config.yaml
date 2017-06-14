@@ -1,0 +1,34 @@
+# Give the execution path of picard and gatk
+# You may want to increase the memory available
+# to java with
+# "java -Xmx50G -jar GenomeAnalysisTK.jar"
+gatk_path: "java -jar /path/to/GenomeAnalysisTK.jar"
+picard_path: "java -jar /path/to/Picard.jar"
+
+# Set the working directory (wd)
+wd: wd
+
+
+
+# You must create and populate these directories in your
+# working directory (wd) with the starting files.
+# Symbolic links should work.
+fastq_dir: 0.fastq
+refgen_dir: 0.reference_genome_fasta
+gencode_dir: 0.gencode
+dbsnp_dir: 0.dbsnp
+adar_sites_dir: 0.adar_sites
+
+
+# These directories will be created
+# as the workflow executes.
+exons_bed_dir: 1.exons_bed
+star_genome_dir: 1.star_genome
+sam_dir: 2.sam_dir
+add_rg_dir: 3.add_read_groups
+mark_dups_dir: 4.mark_duplicates
+split_reads_dir: 5.split_reads
+recal_bases_dir: 6.recalibrated_bases
+varcall_dir: 7.variant_calls
+var_qc_dir: 8.quality_filtered_variants
+adar_filt_dir: 9.adar_filtered_variants
