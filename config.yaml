@@ -6,7 +6,7 @@ gatk_path: "java -jar /path/to/GenomeAnalysisTK.jar"
 picard_path: "java -jar /path/to/Picard.jar"
 
 # Set the working directory (wd)
-wd: wd
+wd: test
 
 
 
