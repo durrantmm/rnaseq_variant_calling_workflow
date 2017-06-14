@@ -11,11 +11,9 @@
 # send mail when job ends or aborts
 #$ -m bea
 #
-# specify an email address
-#$ -M mdurrant@stanford.edu
 #
 # specify the account name
-#$ -A bhatt
+#$ -A montgomery
 #
 # check for errors in the job submission options
 #$ -w w
