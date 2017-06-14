@@ -1,0 +1,69 @@
+{
+    "__default__": {
+        "account": "bhatt",
+        "time": "00:15:00",
+        "n": 1,
+        "partition": "core",
+        "mem": "1G"
+    },
+
+    "create_genome_dictionary": {
+        "mem": "50G",
+        "time": "01:00:00"
+    },
+
+    "index_genome": {
+        "mem": "50G",
+        "time": "01:00:00"
+    },
+
+    "star_genome": {
+        "mem": "60G",
+        "time": "48:00:00"
+    },
+
+    "star_align": {
+        "mem": "60G",
+        "time": "24:00:00"
+    },
+
+    "add_read_groups": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "mark_duplicates": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "split_reads": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "recalibrate_bases": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "print_reads": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "haplotype_caller": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "variant_quality_filter": {
+        "mem": "50G",
+        "time": "12:00:00"
+    },
+
+    "make_adar_bed": {
+        "time": "01:00:00"
+    }
+
+}
