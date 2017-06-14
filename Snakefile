@@ -112,7 +112,7 @@ rule star_align:
         dir='{sam_dir}/{{sample}}.{{genome}}'.format(sam_dir=SAM_DIR),
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
     run:
-        out_prefix = output.sam.strip('Aligned.out.sam')+'.'
+        out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
 
         command = "mkdir -p {{output.dir}}; " \
         "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
