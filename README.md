@@ -72,7 +72,14 @@ From within your working directory, create 5 directories as follows:
     mkdir 0.gencode;
     mkdir 0.dbsnp;
     mkdir 0.adar_sites;
-    
+
+Or it may be easier to download a template working directory by executing 
+
+    wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/wd_hg19.tar.gz;
+    tar -zxvf wd_hg19.tar.gz;
+
+And then setting your `wd` parameter in the config file to this directory.
+
 Now we'll go through each of the directories and describe how to populate them.
 
 ### `0.fastq`
@@ -100,14 +107,6 @@ They must be named as follows:
 
 They cannot be gzipped. 
 
-You can download the hg19 human genome into this directory by typing:
-
-    wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/genomes/human/hg19/hg19.fa.gz
-
-And then uncompress it:
-
-    gunzip hg19.fa.gz
-
 ### `0.gencode`
 This folder contains the gencode GTF file to be used by the STAR aligner.
  
@@ -116,17 +115,10 @@ It must follow the naming convention:
     <genome>.gtf
     
 It must have the same `<genome>` name as the corresponding reference genome in 
+
 `0.reference_genome_fasta`
 
 A version corresponding to hg19 can be downloaded from http://www.gencodegenes.org/releases/19.html
-
-You can also download one with wget as:
-
-    wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/gencode/gtf/hg19.gtf.gz
-
-And uncompress it:
-
-    gunzip hg19.fa.gz
     
 ### `0.dbsnp`
 This folder contains the dbsnp VCF file.
@@ -136,16 +128,7 @@ It must follow the naming convention
     <genome>.vcf
 
 It must have the same `<genome>` name as the corresponding reference genome in 
-`0.reference_genome_fasta` and `0.gencode`.
-
-A version of dbsnp corresponding to hg19 can be downloaded from 
- 
-    wget ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b150_GRCh37p13/VCF/00-All.vcf.gz
-
-or
-
-    wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/dbsnp/gtf/hg19.gtf.gz
-    
+`0.reference_genome_fasta` and `0.gencode`.    
 
 ### `0.adar_sites`
 This folder contains known ADAR A-to-I RNA editing sites. They are excluded outright from the
@@ -157,12 +140,6 @@ It must follow the naming convention
 
 It must have the same `<genome>` name as the corresponding reference genome in 
 `0.reference_genome_fasta`, `0.gencode`, and `0.dbsnp`.
-
-This was originally obtained from the website http://lilab.stanford.edu/GokulR/database/Human_AG_all_hg19_v2.txt 
-
-You can download one from 
- 
-    wget ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b150_GRCh37p13/VCF/00-All.vcf.gz
     
 ## Run Snakemake
 You should now be able to run the snakemake workflow.
@@ -176,3 +153,12 @@ From the `rnaseq_variant_calling_workflow` directory.
 You can set the number of cores used with
 
     snakemake --cores 6
+
+
+## Cluster Job Submission
+If you are using the SGE computing cluster system, you can submit a job using the provided script
+ 
+    qsub submission.sh
+
+You may need to play with the parameters in `cluster.json` to make sure that each step has enough memory and wall time 
+allocated to it.
