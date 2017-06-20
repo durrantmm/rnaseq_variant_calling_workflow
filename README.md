@@ -3,7 +3,7 @@
 ## Download
 Clone the git repository with the command:
 
-    git clone git@github.com:durrantmm/rnaseq_variant_calling_workflow.git
+    git clone https://github.com/durrantmm/rnaseq_variant_calling_workflow.git
 
 ## Installation
 
