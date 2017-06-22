@@ -10,10 +10,10 @@ fi
 
 echo "Removing preexisting rnavcw environment if exists"
 source deactivate
-conda remove --name rnavcw --all --yes
+conda remove --name rnavcw --all --yes;
 
 echo "Creating the new rnavcw environment from environment.yml"
-conda env create -f environment.yml
+conda env create -f environment.yml;
 
 if [ $? -ne 0 ]
     then
@@ -22,9 +22,10 @@ if [ $? -ne 0 ]
 fi
 
 echo "Downloading the test data."
-wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/test.tar.gz
-tar -zxvf test.tar.gz
-rm test.tar.gz
+rm -rf test;
+wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/test.tar.gz;
+tar -zxvf test.tar.gz;
+rm test.tar.gz;
 
 if [ $? -ne 0 ]
     then

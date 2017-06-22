@@ -2,12 +2,11 @@
 # You may want to increase the memory available
 # to java with
 # "java -Xmx50G -jar GenomeAnalysisTK.jar"
-gatk_path: "java -jar /path/to/GenomeAnalysisTK.jar"
-picard_path: "java -jar /path/to/Picard.jar"
+gatk_path: "java -jar GenomeAnalysisTK.jar"
+picard_path: "java -jar picard.jar"
 
 # Set the working directory (wd)
 wd: test
-
 
 
 # You must create and populate these directories in your

@@ -32,7 +32,6 @@ PAIRS = ['R1', 'R2']
 GENOMES = set(WC_refgens.genome)
 GENCODES = set(WC_gencodes.gencode)
 
-#print(SAMPLES, PAIRS, GENOMES, GENCODES)
 
 rule all:
     input:
@@ -98,9 +97,11 @@ rule star_genome:
     output:
         dir="{star_genome_dir}/{{genome}}".format(star_genome_dir=STAR_GENOME_DIR),
         sa="{star_genome_dir}/{{genome}}/SA".format(star_genome_dir=STAR_GENOME_DIR)
+    threads: 12
+
     shell:
         "mkdir -p {output.dir}; "
-        "STAR --runThreadN 2 --runMode genomeGenerate --genomeDir {output.dir} "
+        "STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir {output.dir} "
         "--genomeFastaFiles {input.refgen} --sjdbGTFfile {input.gencode} --sjdbOverhang 75"
 
 rule star_align:
@@ -111,17 +112,18 @@ rule star_align:
     output:
         dir='{sam_dir}/{{sample}}.{{genome}}'.format(sam_dir=SAM_DIR),
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
+    threads: 6
     run:
         out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
 
         command = "mkdir -p {{output.dir}}; " \
         "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
-        "--genomeDir {{input.genome_dir}} --readFilesCommand gunzip -c --runThreadN 6 " \
+        "--genomeDir {{input.genome_dir}} --readFilesCommand gunzip -c --runThreadN {threads} " \
         "--genomeLoad NoSharedMemory --outFilterMultimapNmax 20 --alignSJoverhangMin 8 " \
         "--alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 " \
         "--alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --outSAMunmapped Within " \
         "--outFilterType BySJout --outSAMattributes NH HI AS NM MD --sjdbScore 1 --twopassMode Basic " \
-        "--twopass1readsN -1".format(out_prefix=out_prefix)
+        "--twopass1readsN -1".format(out_prefix=out_prefix, threads=threads)
 
         print(command)
         shell(command)
@@ -256,7 +258,6 @@ rule make_adar_bed:
                     chrom, start, end = line[0], int(line[1])-1, line[1]
                     outfile.write('\t'.join([chrom, str(start), end])+'\n')
         shell('bedtools sort -i {bed} > {output}; rm {bed}'.format(bed=tmp_bed, output=output.adar_bed))
-
 
 
 rule filter_adar_sites:
