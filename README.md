@@ -48,7 +48,7 @@ You may want to add an addition flag, `-Xmx50G`, to make sure that Java allocate
 The next parameter of the `config.yaml` file is `wd: test`. This is the default working directory, and it contains
 some test data to try out. You can give this a try by typing
     
-    snakemake --cores 2
+    snakemake --cores 12
     
 It should take a few minutes to run, but once it runs correctly you know you are all set.
 
@@ -152,7 +152,7 @@ From the `rnaseq_variant_calling_workflow` directory.
 
 You can set the number of cores used with
 
-    snakemake --cores 6
+    snakemake --cores 12
 
 
 ## Cluster Job Submission
