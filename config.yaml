@@ -31,3 +31,8 @@ recal_bases_dir: 6.recalibrated_bases
 varcall_dir: 7.variant_calls
 var_qc_dir: 8.quality_filtered_variants
 adar_filt_dir: 9.adar_filtered_variants
+
+
+# Extra rule configurations
+star_genome_threads: 12
+star_align_threads: 6

@@ -97,7 +97,7 @@ rule star_genome:
     output:
         dir="{star_genome_dir}/{{genome}}".format(star_genome_dir=STAR_GENOME_DIR),
         sa="{star_genome_dir}/{{genome}}/SA".format(star_genome_dir=STAR_GENOME_DIR)
-    threads: 12
+    threads: config['star_genome_threads']
 
     shell:
         "mkdir -p {output.dir}; "
@@ -112,7 +112,7 @@ rule star_align:
     output:
         dir='{sam_dir}/{{sample}}.{{genome}}'.format(sam_dir=SAM_DIR),
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
-    threads: 4
+    threads: config['star_align_threads']
     run:
         out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
 
