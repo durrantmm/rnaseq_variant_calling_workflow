@@ -4,7 +4,8 @@
         "time": "00:15:00",
         "n": 1,
         "partition": "core",
-        "mem": "1G"
+        "mem": "1G",
+        "threads": "2"
     },
 
     "create_genome_dictionary": {
@@ -24,12 +25,14 @@
 
     "star_genome": {
         "mem": "60G",
-        "time": "48:00:00"
+        "time": "48:00:00",
+        "threads": "12"
     },
 
     "star_align": {
         "mem": "60G",
-        "time": "24:00:00"
+        "time": "24:00:00",
+        "threads": "6"
     },
 
     "add_read_groups": {
