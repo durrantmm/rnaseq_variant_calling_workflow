@@ -112,7 +112,7 @@ rule star_align:
     output:
         dir='{sam_dir}/{{sample}}.{{genome}}'.format(sam_dir=SAM_DIR),
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
-    threads: 6
+    threads: 4
     run:
         out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
 
