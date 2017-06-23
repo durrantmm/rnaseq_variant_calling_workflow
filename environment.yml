@@ -20,7 +20,6 @@ dependencies:
 - star=2.5.3a=0
 - urllib3=1.12=py34_0
 - vcftools=0.1.14=4
-- perl=5.22.0.1=0
 - asn1crypto=0.22.0=py34_0
 - bzip2=1.0.6=3
 - cffi=1.10.0=py34_0
