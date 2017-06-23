@@ -11,15 +11,12 @@ dependencies:
 - grep=2.14=1
 - htslib=1.4.1=0
 - java-jdk=8.0.92=1
-- perl-threaded=5.22.0=pl5.22.0_12
-- perl-vcftools-vcf=0.953=3
 - picard=2.9.0=py34_0
 - pysftp=0.2.9=py34_0
 - samtools=1.4.1=0
 - snakemake=3.11.2=py34_1
 - star=2.5.3a=0
 - urllib3=1.12=py34_0
-- vcftools
 - asn1crypto=0.22.0=py34_0
 - bzip2=1.0.6=3
 - cffi=1.10.0=py34_0
@@ -49,4 +46,5 @@ dependencies:
 - yaml=0.1.6=0
 - zlib=1.2.8=3
 - htslib
+- vcftools
 
