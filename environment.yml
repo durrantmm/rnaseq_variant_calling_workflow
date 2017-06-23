@@ -19,7 +19,7 @@ dependencies:
 - snakemake=3.11.2=py34_1
 - star=2.5.3a=0
 - urllib3=1.12=py34_0
-- vcftools=0.1.14=4
+- vcftools
 - asn1crypto=0.22.0=py34_0
 - bzip2=1.0.6=3
 - cffi=1.10.0=py34_0
