@@ -21,6 +21,8 @@ RECAL_BASES_DIR = join(WD, config['recal_bases_dir'])
 VARCALL_DIR = join(WD, config['varcall_dir'])
 VAR_QC_DIR= join(WD, config['var_qc_dir'])
 ADAR_FILT_DIR = join(WD, config['adar_filt_dir'])
+HETVARS_DIR = join(WD, config['hetvars_dir'])
+
 
 WC_fastqs = glob_wildcards(join(FASTQ_DIR, '{sample}.{pair}.fq.gz'))
 WC_refgens = glob_wildcards(join(REFGEN_DIR, '{genome}.fa'))
@@ -35,7 +37,7 @@ GENCODES = set(WC_gencodes.gencode)
 
 rule all:
     input:
-        expand('{adar_filt_dir}/{{sample}}.{{genome}}.vcf'.format(adar_filt_dir=ADAR_FILT_DIR),
+        expand('{hetvars_dir}/{{sample}}.{{genome}}.vcf'.format(hetvars_dir=HETVARS_DIR),
         sample=SAMPLES, genome=GENOMES)
     run:
         print("RNAVCW FINISHED WITH NO EXCEPTIONS!")
@@ -136,8 +138,7 @@ rule add_read_groups:
         '{add_rg_dir}/{{sample}}.{{genome}}.bam'.format(add_rg_dir=READ_GROUPS_DIR)
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; " \
-                  "echo "" > {input}".format(picard=config['picard_path'],
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; ".format(picard=config['picard_path'],
                   input=input, output=output)
 
         print(command)
@@ -268,3 +269,17 @@ rule filter_adar_sites:
         '{adar_filt_dir}/{{sample}}.{{genome}}.vcf'.format(adar_filt_dir=ADAR_FILT_DIR)
     shell:
         'bedtools intersect -header -v -a {input.vcf} -b {input.adar_bed} > {output}'
+
+
+rule filter_heterozygous_snps_only:
+    input:
+        '{adar_filt_dir}/{{sample}}.{{genome}}.vcf'.format(adar_filt_dir=ADAR_FILT_DIR)
+    output:
+        '{hetvars_dir}/{{sample}}.{{genome}}.vcf'.format(hetvars_dir=HETVARS_DIR)
+    run:
+        command = "vcftools --vcf {invcf} --min-alleles 2 --max-alleles 2 " \
+        "--remove-indels --recode --stdout | grep -Ev '1/1:|0/0:' | grep -v '1|1:' | grep -v '0|0:' " \
+        "> {outvcf}; ".format(invcf=input, outvcf=output)
+
+        print(command)
+        shell(command)
