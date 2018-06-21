@@ -1,3 +1,5 @@
+read_length: 101
+
 # Give the execution path of picard and gatk
 # You may want to increase the memory available
 # to java with
