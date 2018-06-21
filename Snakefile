@@ -100,11 +100,12 @@ rule star_genome:
         dir="{star_genome_dir}/{{genome}}".format(star_genome_dir=STAR_GENOME_DIR),
         sa="{star_genome_dir}/{{genome}}/SA".format(star_genome_dir=STAR_GENOME_DIR)
     threads: config['star_genome_threads']
-
+    params:
+        overhang=config['read_length'] - 1
     shell:
         "mkdir -p {output.dir}; "
         "STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir {output.dir} "
-        "--genomeFastaFiles {input.refgen} --sjdbGTFfile {input.gencode} --sjdbOverhang 75"
+        "--genomeFastaFiles {input.refgen} --sjdbGTFfile {input.gencode} --sjdbOverhang {params.overhang}"
 
 rule star_align:
     input:
@@ -115,20 +116,19 @@ rule star_align:
         dir='{sam_dir}/{{sample}}.{{genome}}'.format(sam_dir=SAM_DIR),
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
     threads: config['star_align_threads']
+    params:
+        overhang=config['read_length'] - 1,
+        out_prefix='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.'.format(sam_dir=SAM_DIR)
     run:
-        out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
-
-        command = "mkdir -p {{output.dir}}; " \
-        "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
-        "--genomeDir {{input.genome_dir}} --readFilesCommand gunzip -c --runThreadN {threads} " \
-        "--genomeLoad NoSharedMemory --outFilterMultimapNmax 20 --alignSJoverhangMin 8 " \
-        "--alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 " \
-        "--alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --outSAMunmapped Within " \
-        "--outFilterType BySJout --outSAMattributes NH HI AS NM MD --sjdbScore 1 --twopassMode Basic " \
-        "--twopass1readsN -1".format(out_prefix=out_prefix, threads=threads)
-
-        print(command)
-        shell(command)
+        "mkdir -p {output.dir}; "
+        "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {params.out_prefix} "
+        "--genomeDir {input.genome_dir} --readFilesCommand zcat --runThreadN {threads} "
+        "--genomeLoad NoSharedMemory --outFilterType BySJout "
+        "--outSAMunmapped Within "
+        "--outSAMattributes NH HI AS NM MD NM "
+        "--twopassMode Basic "
+        "--sjdbOverhang {params.overhang} "
+        "--sjdbGTFfile {input.gencode}"
 
 
 rule add_read_groups:
