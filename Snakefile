@@ -119,7 +119,7 @@ rule star_align:
     params:
         overhang=config['read_length'] - 1,
         out_prefix='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.'.format(sam_dir=SAM_DIR)
-    run:
+    shell:
         "mkdir -p {output.dir}; "
         "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {params.out_prefix} "
         "--genomeDir {input.genome_dir} --readFilesCommand zcat --runThreadN {threads} "
