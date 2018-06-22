@@ -3,7 +3,7 @@
         "account": "asbhatt",
         "time": "00:15:00",
         "n": 1,
-        "partition": "core",
+        "partition": "batch",
         "mem": "1G"
     },
 

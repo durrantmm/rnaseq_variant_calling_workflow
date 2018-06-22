@@ -3,7 +3,7 @@
 #SBATCH --job-name=snakemake_slurm_submission
 #SBATCH --output=snakemake_slurm_submission
 #
-#
+#SBATCJ -p batch
 #SBATCH --ntasks=1
 #SBATCH --time=168:00:00
 #SBATCH --mem=1G
