@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+#SBATCH --account smontgom
 #SBATCH --job-name=snakemake_slurm_submission
 #SBATCH --output=snakemake_slurm_submission
 #
